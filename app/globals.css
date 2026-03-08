@@ -1,0 +1,69 @@
+@import "tailwindcss";
+
+@theme {
+  --color-background: #f9f8f6;
+  --color-primary: #8da399;
+  --color-secondary: #6b8ead;
+  --color-text-dark: #2c3e50;
+  --color-text-light: #7f8c8d;
+}
+
+@layer base {
+  html,
+  body,
+  #__next {
+    height: 100%;
+    background-color: var(--color-background);
+    color: var(--color-text-dark);
+  }
+
+  body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+@layer components {
+  .card {
+    @apply bg-white/80 backdrop-blur-sm rounded-2xl shadow-sm border border-transparent hover:shadow-md transition-shadow duration-300;
+  }
+
+  .tag {
+    @apply px-3 py-1 rounded-full text-sm font-medium bg-white/60 border border-neutral-200 text-[var(--color-text-dark)];
+  }
+
+  .primary-btn {
+    @apply inline-flex items-center gap-2 bg-[var(--color-primary)] text-white px-5 py-2 rounded-full shadow-sm hover:shadow-md transition-all;
+  }
+
+  .outline-btn {
+    @apply inline-flex items-center gap-2 border-2 border-[var(--color-secondary)] text-[var(--color-secondary)] px-5 py-2 rounded-full hover:bg-[var(--color-secondary)] hover:text-white transition-all;
+  }
+}
+
+/* Floating chat */
+.floating-chat-btn {
+  @apply fixed bottom-6 right-6 z-50 bg-[var(--color-secondary)] text-white p-4 rounded-full shadow-lg hover:scale-105 transition-transform;
+}
+
+.chat-window {
+  @apply fixed bottom-20 right-6 z-50 w-80 max-w-[90vw] bg-white rounded-xl shadow-xl border border-neutral-200 overflow-hidden;
+}
+
+.chat-header {
+  @apply flex items-center justify-between gap-2 px-4 py-3 bg-[var(--color-secondary)] text-white;
+}
+
+.chat-body {
+  @apply px-4 py-3 max-h-60 overflow-auto space-y-3 bg-white;
+}
+
+.chat-input {
+  @apply flex items-center gap-2 px-3 py-2 border-t border-neutral-100;
+}
+
+@media (min-width: 768px) {
+  .hero-grid {
+    grid-template-columns: 1fr 420px;
+  }
+}
