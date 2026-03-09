@@ -36,7 +36,7 @@ export const CERTIFICATIONS_DATA = [
     title: "Gemini Certified Student",
     issuer: "Google",
     date: "2026",
-    verifyUrl: "#",
+    verifyUrl: "/gemini_certified_student.pdf",
   },
   // Sau này có thêm chứng chỉ AWS/Azure thì bạn cứ copy block này dán xuống dưới
 ];

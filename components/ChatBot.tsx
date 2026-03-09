@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useChat } from "@ai-sdk/react";
+import { TextStreamChatTransport } from "ai";
 import type { UIMessage } from "ai";
 import { motion, AnimatePresence } from "framer-motion";
 import { MessageSquare, X, Send } from "lucide-react";
@@ -23,6 +24,7 @@ export default function Chatbot() {
   ];
 
   const { messages, status, sendMessage } = useChat({
+    transport: new TextStreamChatTransport({ api: "/api/chat" }),
     messages: initialMessages,
   });
 
@@ -93,10 +95,11 @@ export default function Chatbot() {
                         : "bg-slate-800 text-slate-200 rounded-bl-none border border-slate-700"
                     }`}
                   >
-                    {m.parts
-                      ?.filter((part) => part.type === "text")
-                      .map((part) => part.text)
-                      .join("\n")}
+                    {(m as any).content ||
+                      m.parts
+                        ?.filter((part) => part.type === "text")
+                        .map((part) => part.text)
+                        .join("\n")}
                   </div>
                 </div>
               ))}

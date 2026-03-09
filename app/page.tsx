@@ -105,7 +105,7 @@ export default function HomePage() {
             </nav>
             <div className="flex items-center gap-2">
               <a
-                href="/CV_Security.pdf"
+                href="/Ho_Dinh_Tri_CV.pdf"
                 download
                 className="hidden sm:inline-flex px-4 py-2 rounded-lg bg-cyan-500 text-slate-950 text-sm font-semibold hover:brightness-110 hover:scale-[1.02] transition"
               >
@@ -326,10 +326,10 @@ export default function HomePage() {
             <div className="md:col-span-2 space-y-6">
               <div>
                 <h2 className="text-white text-3xl font-bold mb-2">
-                  Liên hệ với mình
+                  Contact me
                 </h2>
                 <p className="text-slate-400 text-sm">
-                  Bạn đang có ý tưởng, cần kết nối? Đừng ngần ngại!
+                  Do you have an idea and need to connect? Don't hesitate!
                 </p>
               </div>
               <div className="space-y-4">
@@ -352,9 +352,9 @@ export default function HomePage() {
                   </div>
                   <div>
                     <p className="text-[11px] text-slate-500 uppercase tracking-wider">
-                      Vị trí
+                      Location
                     </p>
-                    <p className="font-medium text-sm">Hồ Chí Minh, Việt Nam</p>
+                    <p className="font-medium text-sm">Ho Chi Minh, Vietnam</p>
                   </div>
                 </div>
               </div>
