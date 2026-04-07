@@ -4,6 +4,16 @@ import { motion } from "framer-motion";
 import { Github, ExternalLink } from "lucide-react";
 import { glass } from "./SharedUI";
 
+type ProjectCardProps = {
+  title: string;
+  desc: string;
+  tags: string[];
+  imageUrl: string;
+  githubUrl?: string | null;
+  demoUrl?: string | null;
+  onOpen?: () => void;
+};
+
 export default function ProjectCard({
   title,
   desc,
@@ -11,18 +21,29 @@ export default function ProjectCard({
   imageUrl,
   githubUrl,
   demoUrl,
-}: any) {
+  onOpen,
+}: ProjectCardProps) {
   return (
     <motion.article
       whileHover={{ y: -5, scale: 1.01 }}
       transition={{ type: "spring", stiffness: 240, damping: 20 }}
-      className={`${glass} overflow-hidden hover:border-cyan-400/50`}
+      className={`${glass} overflow-hidden hover:border-cyan-400/50 ${
+        onOpen ? "cursor-pointer" : ""
+      }`}
+      role={onOpen ? "button" : undefined}
+      tabIndex={onOpen ? 0 : undefined}
+      onClick={onOpen}
+      onKeyDown={(e) => {
+        if (!onOpen) return;
+        if (e.key === "Enter" || e.key === " ") onOpen();
+      }}
     >
       <div className="h-52 sm:h-56 w-full relative overflow-hidden bg-slate-800/50">
         <img
           src={imageUrl}
           alt={title}
           className="w-full h-full object-cover border-b border-slate-800/50"
+          loading="lazy"
         />
       </div>
       <div className="p-5">
@@ -34,6 +55,7 @@ export default function ProjectCard({
                 href={githubUrl}
                 target="_blank"
                 rel="noreferrer"
+                onClick={(e) => e.stopPropagation()}
                 className="w-8 h-8 rounded-full border border-slate-700 hover:border-cyan-400/60 text-slate-200 hover:text-cyan-400 inline-flex items-center justify-center transition"
               >
                 <Github size={15} />
@@ -44,6 +66,7 @@ export default function ProjectCard({
                 href={demoUrl}
                 target="_blank"
                 rel="noreferrer"
+                onClick={(e) => e.stopPropagation()}
                 className="w-8 h-8 rounded-full border border-slate-700 hover:border-cyan-400/60 text-slate-200 hover:text-cyan-400 inline-flex items-center justify-center transition"
               >
                 <ExternalLink size={15} />

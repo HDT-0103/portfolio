@@ -1,24 +1,59 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+Portfolio website built with [Next.js](https://nextjs.org) + Supabase.
 
 ## Getting Started
 
-First, run the development server:
+1) Install dependencies and run the dev server:
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Supabase Projects (Featured Projects)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Featured Projects are stored in Supabase (instead of static data).
+
+1) Create the table + policies in Supabase SQL editor:
+
+- `supabase/projects.sql`
+
+2) (Optional) Seed sample projects:
+
+- `supabase/seed_projects.sql`
+
+2) Ensure you have these env vars in `.env.local`:
+
+- `NEXT_PUBLIC_SUPABASE_URL`
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+
+## Admin (CRUD Projects)
+
+The site includes an admin page at `/admin` that calls server-side API routes:
+
+- `GET /api/projects` (public: featured + published only; admin: all)
+- `POST /api/projects` (admin)
+- `PATCH /api/projects/:id` (admin)
+- `DELETE /api/projects/:id` (admin)
+
+Add these env vars for admin mode:
+
+- `ADMIN_TOKEN` (a random secret string)
+- `SUPABASE_SERVICE_ROLE_KEY` (Supabase service role key; keep server-only)
+
+In the `/admin` UI, paste `ADMIN_TOKEN` to load and manage projects.
+
+## GitHub Import / Sync (Optional)
+
+The admin page can prefill or sync project fields from GitHub.
+
+- API: `GET /api/github/repo?url=https://github.com/<owner>/<repo>`
+- Optional env: `GITHUB_TOKEN` (recommended to avoid GitHub rate limits)
+
+## Images
+
+`image_url` can be a local path (e.g. `/images/my.png` in `public/`) or a full public URL (e.g. from Supabase Storage).
 
 ## Learn More
 
