@@ -68,13 +68,16 @@ export default function AdminProjectsClient() {
     [projects, selectedId],
   );
 
-  async function loadProjects(token = adminToken) {
+  const normalizedToken = adminToken.trim();
+
+  async function loadProjects(token = normalizedToken) {
+    const safeToken = token.trim();
     setLoading(true);
     setError(null);
     setSuccess(null);
     try {
       const res = await fetch("/api/projects", {
-        headers: token ? { "x-admin-token": token } : {},
+        headers: safeToken ? { "x-admin-token": safeToken } : {},
         cache: "no-store",
       });
       const json = await res.json();
@@ -140,10 +143,13 @@ export default function AdminProjectsClient() {
     setSuccess(null);
     setSyncing(true);
     try {
-      if (!adminToken) throw new Error("Missing ADMIN_TOKEN");
+      if (!normalizedToken) throw new Error("Missing ADMIN_TOKEN");
 
-      const list = projects.filter((p) => typeof p.github_url === "string" && p.github_url);
-      if (list.length === 0) throw new Error("No projects with GitHub URL to sync");
+      const list = projects.filter(
+        (p) => typeof p.github_url === "string" && p.github_url,
+      );
+      if (list.length === 0)
+        throw new Error("No projects with GitHub URL to sync");
 
       for (const p of list) {
         const url = p.github_url ?? "";
@@ -158,7 +164,8 @@ export default function AdminProjectsClient() {
         if (!suggested) continue;
 
         const payload = {
-          title: typeof suggested.title === "string" ? suggested.title : p.title,
+          title:
+            typeof suggested.title === "string" ? suggested.title : p.title,
           desc:
             typeof suggested.description === "string"
               ? suggested.description
@@ -178,7 +185,7 @@ export default function AdminProjectsClient() {
           method: "PATCH",
           headers: {
             "content-type": "application/json",
-            "x-admin-token": adminToken,
+            "x-admin-token": normalizedToken,
           },
           body: JSON.stringify(payload),
         });
@@ -189,7 +196,7 @@ export default function AdminProjectsClient() {
       }
 
       setSuccess("Synced projects from GitHub.");
-      await loadProjects(adminToken);
+      await loadProjects(normalizedToken);
     } catch (e: any) {
       setError(e?.message ?? "Sync failed");
     } finally {
@@ -199,10 +206,10 @@ export default function AdminProjectsClient() {
 
   useEffect(() => {
     if (!loadedToken) return;
-    if (!adminToken) return;
-    loadProjects(adminToken);
+    if (!normalizedToken) return;
+    loadProjects(normalizedToken);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [loadedToken]);
+  }, [loadedToken, normalizedToken]);
 
   function pickProject(p: ProjectRow) {
     setSelectedId(p.id);
@@ -223,7 +230,7 @@ export default function AdminProjectsClient() {
     setError(null);
     setSuccess(null);
     try {
-      if (!adminToken) throw new Error("Missing ADMIN_TOKEN");
+      if (!normalizedToken) throw new Error("Missing ADMIN_TOKEN");
 
       const payload = {
         title: draft.title,
@@ -245,7 +252,7 @@ export default function AdminProjectsClient() {
         method,
         headers: {
           "content-type": "application/json",
-          "x-admin-token": adminToken,
+          "x-admin-token": normalizedToken,
         },
         body: JSON.stringify(payload),
       });
@@ -254,7 +261,7 @@ export default function AdminProjectsClient() {
       if (!res.ok) throw new Error(json?.error || "Save failed");
 
       setSuccess(isEdit ? "Updated project." : "Created project.");
-      await loadProjects(adminToken);
+      await loadProjects(normalizedToken);
 
       const saved = (json?.project ?? null) as ProjectRow | null;
       if (saved?.id) {
@@ -278,15 +285,15 @@ export default function AdminProjectsClient() {
     setError(null);
     setSuccess(null);
     try {
-      if (!adminToken) throw new Error("Missing ADMIN_TOKEN");
+      if (!normalizedToken) throw new Error("Missing ADMIN_TOKEN");
       const res = await fetch(`/api/projects/${draft.id}`, {
         method: "DELETE",
-        headers: { "x-admin-token": adminToken },
+        headers: { "x-admin-token": normalizedToken },
       });
       const json = await res.json();
       if (!res.ok) throw new Error(json?.error || "Delete failed");
       setSuccess("Deleted project.");
-      await loadProjects(adminToken);
+      await loadProjects(normalizedToken);
       newProject();
     } catch (e: any) {
       setError(e?.message ?? "Delete failed");
@@ -329,11 +336,13 @@ export default function AdminProjectsClient() {
                 <button
                   type="button"
                   onClick={() => {
-                    localStorage.setItem("admin_token", adminToken);
-                    loadProjects(adminToken);
+                    const safeToken = adminToken.trim();
+                    setAdminToken(safeToken);
+                    localStorage.setItem("admin_token", safeToken);
+                    loadProjects(safeToken);
                   }}
                   className="h-10 px-4 rounded-lg bg-cyan-500 text-slate-950 text-sm font-semibold hover:brightness-110 transition disabled:opacity-60"
-                  disabled={!adminToken || loading}
+                  disabled={!normalizedToken || loading}
                 >
                   Load
                 </button>
@@ -350,16 +359,16 @@ export default function AdminProjectsClient() {
                   type="button"
                   onClick={syncAllFromGithub}
                   className="text-sm text-slate-400 hover:text-slate-200 transition-colors disabled:opacity-60"
-                  disabled={!adminToken || loading || syncing}
+                  disabled={!normalizedToken || loading || syncing}
                   title="Refresh title/description/tags/demo from GitHub"
                 >
                   {syncing ? "Syncing…" : "Sync from GitHub"}
                 </button>
                 <button
                   type="button"
-                  onClick={() => loadProjects(adminToken)}
+                  onClick={() => loadProjects(normalizedToken)}
                   className="text-sm text-slate-400 hover:text-slate-200 transition-colors"
-                  disabled={!adminToken || loading}
+                  disabled={!normalizedToken || loading}
                 >
                   Refresh
                 </button>
@@ -458,7 +467,8 @@ export default function AdminProjectsClient() {
                   </button>
                 </div>
                 <div className="text-[11px] text-slate-500 mt-2">
-                  Tip: image auto-detect uses the first image in README (if any).
+                  Tip: image auto-detect uses the first image in README (if
+                  any).
                 </div>
               </div>
 

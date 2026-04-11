@@ -69,7 +69,8 @@ function toInsert(payload: ProjectPayload) {
           ? null
           : undefined;
 
-  const featured = typeof payload.featured === "boolean" ? payload.featured : true;
+  const featured =
+    typeof payload.featured === "boolean" ? payload.featured : true;
   const sortOrder =
     typeof payload.sortOrder === "number"
       ? payload.sortOrder
@@ -124,7 +125,13 @@ export async function GET(req: Request) {
 export async function POST(req: Request) {
   const isAdmin = assertAdmin(req);
   if (!isAdmin) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    return NextResponse.json(
+      {
+        error:
+          "Unauthorized: invalid or missing ADMIN_TOKEN. Please reload token in Admin UI.",
+      },
+      { status: 401 },
+    );
   }
 
   const payload = (await req.json()) as ProjectPayload;

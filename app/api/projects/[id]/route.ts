@@ -98,7 +98,13 @@ export async function PATCH(
 ) {
   const isAdmin = assertAdmin(req);
   if (!isAdmin) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    return NextResponse.json(
+      {
+        error:
+          "Unauthorized: invalid or missing ADMIN_TOKEN. Please reload token in Admin UI.",
+      },
+      { status: 401 },
+    );
   }
 
   const { id } = await ctx.params;
@@ -131,7 +137,13 @@ export async function DELETE(
 ) {
   const isAdmin = assertAdmin(req);
   if (!isAdmin) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    return NextResponse.json(
+      {
+        error:
+          "Unauthorized: invalid or missing ADMIN_TOKEN. Please reload token in Admin UI.",
+      },
+      { status: 401 },
+    );
   }
 
   const { id } = await ctx.params;
