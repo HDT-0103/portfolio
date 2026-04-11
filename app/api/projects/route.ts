@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { assertAdmin } from "../../../lib/adminAuth";
+import { assertAdmin, checkAdmin } from "../../../lib/adminAuth";
 import { createSupabaseAdminClient } from "../../../lib/supabaseAdmin";
 import { createSupabasePublicClient } from "../../../lib/supabasePublic";
 
@@ -123,12 +123,18 @@ export async function GET(req: Request) {
 }
 
 export async function POST(req: Request) {
-  const isAdmin = assertAdmin(req);
-  if (!isAdmin) {
+  const auth = checkAdmin(req);
+  if (!auth.ok) {
+    const reasonText =
+      auth.reason === "missing_server_token"
+        ? "ADMIN_TOKEN is missing on server runtime"
+        : auth.reason === "missing_request_token"
+          ? "admin token is missing in request headers"
+          : "provided token does not match server ADMIN_TOKEN";
+
     return NextResponse.json(
       {
-        error:
-          "Unauthorized: invalid or missing ADMIN_TOKEN. Please reload token in Admin UI.",
+        error: `Unauthorized: ${reasonText}.`,
       },
       { status: 401 },
     );
