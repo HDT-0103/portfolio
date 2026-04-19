@@ -3,9 +3,9 @@ import "./globals.css";
 import Chatbot from "@/components/ChatBot";
 
 export const metadata: Metadata = {
-  title: "Chriss | Portfolio",
+  title: "Ho Dinh Tri",
   description:
-    "Chriss's portfolio - A Computer Science student passionate about cybersecurity and cloud computing in Ho Chi Minh City",
+    "Ho Dinh Tri's portfolio - A Computer Science student passionate about cybersecurity and cloud computing in Ho Chi Minh City",
   icons: {
     icon: "/icon_portfolio.png",
   },
