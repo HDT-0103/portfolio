@@ -81,8 +81,7 @@ export default function HomePageClient({ projects }: { projects: Project[] }) {
     }
   };
 
-  const activeProject =
-    projects.find((p) => p.id === activeProjectId) ?? null;
+  const activeProject = projects.find((p) => p.id === activeProjectId) ?? null;
 
   return (
     <main className="min-h-screen bg-[#0B1120] text-slate-200">
@@ -106,7 +105,7 @@ export default function HomePageClient({ projects }: { projects: Project[] }) {
               href="#top"
               className="text-white font-extrabold tracking-tight text-lg"
             >
-              Chriss<span className="text-cyan-400">.Dev</span>
+              <span className="text-cyan-400">Ho Dinh Tri</span>
             </a>
             <nav className="hidden md:flex items-center gap-6">
               <NavItem href="#about">About</NavItem>
@@ -160,11 +159,11 @@ export default function HomePageClient({ projects }: { projects: Project[] }) {
         >
           <div>
             <div className="inline-flex items-center gap-2 text-[11px] text-cyan-300 border border-cyan-400/40 rounded-full px-3 py-1 mb-4">
-              <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" /> READY FOR
-              NEW CHALLENGES
+              <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" /> READY
+              FOR NEW CHALLENGES
             </div>
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight text-white">
-              Hi, I’m <span className="text-cyan-400">Chriss</span>
+              Hi, I’m <span className="text-cyan-400">Tri</span>
             </h1>
             <p className="text-slate-400 mt-4 max-w-xl leading-relaxed">
               Computer Science student at the University of Science. Passionate
@@ -193,7 +192,7 @@ export default function HomePageClient({ projects }: { projects: Project[] }) {
               <div className="h-77.5 sm:h-85 rounded-2xl bg-linear-to-br from-slate-900 via-slate-800 to-slate-900 border border-slate-800 flex items-center justify-center">
                 <img
                   src="/avatar.jpeg"
-                  alt="Chriss"
+                  alt="Ho Dinh Tri"
                   className="w-[86%] h-[86%] rounded-2xl object-cover border border-cyan-500/20 shadow-lg"
                 />
               </div>
@@ -331,7 +330,9 @@ export default function HomePageClient({ projects }: { projects: Project[] }) {
                     <h3 className="text-cyan-300 font-semibold">
                       University of Science (VNUHCM)
                     </h3>
-                    <span className="text-[11px] text-slate-500">2024–2028</span>
+                    <span className="text-[11px] text-slate-500">
+                      2024–2028
+                    </span>
                   </div>
                   <p className="text-white text-sm font-medium">
                     Bachelor&apos;s in Computer Science
@@ -488,10 +489,10 @@ export default function HomePageClient({ projects }: { projects: Project[] }) {
 
         <footer className="mt-14 pt-7 border-t border-slate-900 text-center">
           <div className="text-sm text-white font-semibold">
-            Chriss<span className="text-cyan-400">.Dev</span>
+            <span className="text-cyan-400">Ho Dinh Tri</span>
           </div>
           <p className="text-[11px] text-slate-500 mt-2">
-            © 2026 Chriss. Designed with passion for Tech &amp; Security.
+            © 2026 Ho Dinh Tri. Designed with passion for Tech &amp; Security.
           </p>
         </footer>
       </div>

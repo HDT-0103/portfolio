@@ -17,7 +17,7 @@ export default function Chatbot() {
       parts: [
         {
           type: "text",
-          text: "Hi! I'm Chriss's AI assistant. Are you visiting the website to search for candidates, or just browsing projects?",
+          text: "Hi! I'm Tri's AI assistant. Are you visiting the website to search for candidates, or just browsing projects?",
         },
       ],
     },
@@ -70,7 +70,7 @@ export default function Chatbot() {
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
                 <span className="text-white font-semibold text-sm">
-                  Chriss's AI Bot Assistant
+                  Tri's AI Bot Assistant
                 </span>
               </div>
               <button
